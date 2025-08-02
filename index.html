@@ -454,17 +454,17 @@
     </div>
     <div class="footer">
         <a href="https://facebook.com" target="_blank" title="Facebook" style="margin:0 10px;display:inline-block;">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" style="width:32px;height:32px;filter:grayscale(0%);">
+            <img src="https://www.facebook.com/profile.php?id=61552364278765" alt="Facebook" style="width:32px;height:32px;filter:grayscale(0%);">
         </a>
         <a href="https://linkedin.com" target="_blank" title="LinkedIn" style="margin:0 10px;display:inline-block;">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" style="width:32px;height:32px;filter:grayscale(0%);">
+            <img src="https://www.linkedin.com/in/moataz-ahmad-9a90b92aa/" alt="LinkedIn" style="width:32px;height:32px;filter:grayscale(0%);">
         </a>
         <a href="https://github.com" target="_blank" title="GitHub" style="margin:0 10px;display:inline-block;">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" style="width:32px;height:32px;filter:grayscale(0%);">
+            <img src="https://github.com/Moataz624" alt="GitHub" style="width:32px;height:32px;filter:grayscale(0%);">
         </a>
     </div>
     <script>
-        // وظيفة البحث للجدول (بحث بالاسم أو الدولة)
+
         function filterTable() {
             var input = document.getElementById("search");
             var filter = input.value.toUpperCase();
@@ -505,7 +505,7 @@
         };
     </script>
     <script>
-        // بيانات إضافية لكل عميل (يمكنك تعديلها أو زيادتها)
+
         var customerDetails = {
             'Moataz Ahmed': { country: 'Egypt', email: 'moataz@example.com', phone: '+20 100 000 0000' },
             'Alfreds Futterkiste': { country: 'Germany', email: 'alfreds@futterkiste.de', phone: '+49 30 123456' },
@@ -572,7 +572,7 @@
         };
 
         $(document).ready(function() {
-            // أضف كلاس للأسماء لجعلها قابلة للنقر
+
             $('#customer-table tr').each(function() {
                 var $nameCell = $(this).find('td:first');
                 if ($nameCell.length) {
@@ -581,9 +581,9 @@
                 }
             });
 
-            // عند الضغط على الاسم
+
             $('#customer-table').on('click', '.customer-name', function() {
-                // إزالة أي بوكس مفتوح آخر
+
                 $('.customer-details-box').remove();
                 var name = $(this).text().trim();
                 var details = customerDetails[name];
@@ -601,7 +601,7 @@
                         <em>No more details available.</em>
                     </div>`;
                 }
-                // حساب مكان البوكس
+
                 var offset = $(this).offset();
                 var box = $(boxHtml).css({
                     top: offset.top + $(this).outerHeight() + 4,
@@ -610,15 +610,15 @@
                 $('body').append(box);
             });
 
-            // إخفاء البوكس عند مغادرة الماوس له
+
             $(document).on('mouseleave', '.customer-details-box', function() {
                 $(this).fadeOut(150, function() { $(this).remove(); });
             });
-            // إظهار البوكس عند المرور عليه (حتى لا يختفي إذا كان الماوس عليه)
+
             $(document).on('mouseenter', '.customer-details-box', function() {
                 $(this).stop(true, true).show();
             });
-            // إخفاء البوكس إذا ابتعد الماوس عن الاسم والبوكس معًا
+
             $(document).on('mousemove', function(e) {
                 var $box = $('.customer-details-box');
                 if ($box.length) {
@@ -644,12 +644,12 @@
             }
             if (!email) email = null;
             if (!phone) phone = null;
-            // أضف للجدول
+
             var newRow = `<tr><td class="customer-name" style="cursor:pointer;">${name}</td><td>${country}</td></tr>`;
             $('#customer-table').append(newRow);
-            // أضف للبيانات
+
             customerDetails[name] = { country: country, email: email, phone: phone };
-            // امسح الحقول
+
             $('#add-customer-form')[0].reset();
         });
     });
@@ -657,3 +657,4 @@
     
 </body>
 </html>
+
