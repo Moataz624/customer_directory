@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>moataz1</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="java.js"></script>
+    <style>
+        body {
+            text-align: center;
+            background: linear-gradient(135deg, #f47521 0%, #ffecd2 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(90deg, #1d02e2 60%, #6a11cb 100%);
+            padding: 32px 0 24px 0;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(29,2,226,0.12);
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+        }
+        .header h2 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+        .container {
+            width: 95%;
+            max-width: 600px;
+            background: #fff;
+            box-shadow: 0 6px 32px rgba(244,117,33,0.13), 0 1.5px 8px rgba(29,2,226,0.07);
+            border-radius: 22px;
+            padding: 38px 28px 32px 28px;
+            margin: 48px auto 0 auto;
+            transition: box-shadow 0.3s;
+        }
+        .container:hover {
+            box-shadow: 0 12px 48px rgba(244,117,33,0.18), 0 3px 16px rgba(29,2,226,0.10);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 28px;
+            color: #1d02e2;
+            font-size: 2.1rem;
+            letter-spacing: 1px;
+        }
+        input[type="text"] {
+            width: 60%;
+            min-width: 180px;
+            max-width: 350px;
+            padding: 12px 14px;
+            margin-bottom: 24px;
+            font-size: 1em;
+            border: 1.5px solid #f47521;
+            border-radius: 8px;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 4px rgba(244,117,33,0.08);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        input[type="text"]:focus {
+            border: 2px solid #1d02e2;
+            box-shadow: 0 2px 8px rgba(29,2,226,0.10);
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 10px;
+            background: #f9f9f9;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 8px rgba(29,2,226,0.06);
+        }
+        th, td {
+            text-align: left;
+            padding: 16px 14px;
+        }
+        th {
+            background: linear-gradient(90deg, #f4d35e 60%, #f47521 100%);
+            color: #1d02e2;
+            font-size: 1.08rem;
+            border-bottom: 2px solid #f47521;
+        }
+        tr:nth-child(even) {
+            background-color: #fff7e6;
+        }
+        tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background: #f4e7a1;
+            transition: background 0.2s;
+        }
+        .footer {
+            margin-top: 60px;
+            padding: 16px 0;
+            background: linear-gradient(90deg, #f0ff7f 60%, #f47521 100%);
+            color: #1d02e2;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            box-shadow: 0 -2px 12px rgba(244,117,33,0.08);
+        }
+        .footer a img {
+            transition: filter 0.2s, background 0.2s, border-radius 0.2s;
+            border-radius: 50%;
+            background: transparent;
+        }
+        .footer a:hover img {
+            filter: brightness(1.2) drop-shadow(0 0 8px #1d02e2);
+            background: #f47521;
+            border-radius: 50%;
+        }
+        .customer-details-box {
+            background: #fffbe7;
+            border: 1.5px solid #f47521;
+            padding: 14px 18px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px #f4752140;
+            position: absolute;
+            z-index: 10;
+            min-width: 220px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Customer Directory</h2>
+        <h3>Made with Moataz Ahmed 🖤</h3>
+    </div>
+    <div class="add-customer-container" style="margin: 38px auto 30px auto; max-width: 500px; background: #fffbe7; border: 1.5px solid #f47521; border-radius: 16px; box-shadow: 0 2px 12px #f4752140; padding: 22px 18px 18px 18px;">
+        <h3 style="color:#1d02e2; margin-top:0;">Add New Customer</h3>
+        <form id="add-customer-form" autocomplete="off" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+            <input type="text" id="new-name" placeholder="Name *" style="width:80%;margin:0;padding:8px 10px;border-radius:7px;border:1px solid #f47521;" required>
+            <input type="text" id="new-country" placeholder="Country *" style="width:80%;margin:0;padding:8px 10px;border-radius:7px;border:1px solid #f47521;" required>
+            <input type="email" id="new-email" placeholder="Email" style="width:70%;margin:0;padding:8px 10px;border-radius:7px;border:1px solid #f47521;">
+            <input type="text" id="new-phone" placeholder="Phone" style="width:80%;margin:0;padding:8px 10px;border-radius:7px;border:1px solid #f47521;">
+            <button type="submit" style="margin-top:10px;padding:8px 28px;background:#1d02e2;color:#fff;border:none;border-radius:7px;font-size:1rem;cursor:pointer;transition:background 0.2s;">Submit</button>
+        </form>
+    </div>
+    <div class="container">
+        <h1>My Customers</h1>
+        <input type="text" id="search" placeholder="Search for names..." onkeyup="filterTable()">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                </tr>
+            </thead>
+            <tbody id="customer-table">
+                <tr>
+                    <td>Moataz Ahmed</td>
+                    <td>Egypt</td>
+                </tr>
+                <tr>
+                    <td>Alfreds Futterkiste</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Berglunds snabbköp</td>
+                    <td>Sweden</td>
+                </tr>
+                <tr>
+                    <td>Island Trading</td>
+                    <td>UK</td>
+                </tr>
+                <tr>
+                    <td>Königlich Essen</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Laughing Bacchus Winecellars</td>
+                    <td>Canada</td>
+                </tr>
+                <tr>
+                    <td>Magazzini Alimentari Riuniti</td>
+                    <td>Italy</td>
+                </tr>
+                <tr>
+                    <td>North South</td>
+                    <td>UK</td>
+                </tr>
+                <tr>
+                    <td>Paris spécialités</td>
+                    <td>France</td>
+                </tr>
+                <tr>
+                    <td>Tokyo Traders</td>
+                    <td>Japan</td>
+                </tr>
+                <tr>
+                    <td>Centro comercial Moctezuma</td>
+                    <td>Mexico</td>
+                </tr>
+                <tr>
+                    <td>Ernst Handel</td>
+                    <td>Austria</td>
+                </tr>
+                <tr>
+                    <td>Folk och fä HB</td>
+                    <td>Sweden</td>
+                </tr>
+                <tr>
+                    <td>Franchi S.p.A.</td>
+                    <td>Italy</td>
+                </tr>
+                <tr>
+                    <td>Wellington Importadora</td>
+                    <td>Brazil</td>
+                </tr>
+                <tr>
+                    <td>Blauer See Delikatessen</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Save-a-lot Markets</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>Simons bistro</td>
+                    <td>Denmark</td>
+                </tr>
+                <tr>
+                    <td>Piccolo und mehr</td>
+                    <td>Switzerland</td>
+                </tr>
+                <tr>
+                    <td>Rattlesnake Canyon Grocery</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>Suprêmes délices</td>
+                    <td>Belgium</td>
+                </tr>
+                <tr>
+                    <td>Vaffeljernet</td>
+                    <td>Norway</td>
+                </tr>
+                <tr>
+                    <td>White Clover Markets</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>QUICK-Stop</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Hungry Owl All-Night Grocers</td>
+                    <td>UK</td>
+                </tr>
+                <tr>
+                    <td>La maison d'Asie</td>
+                    <td>France</td>
+                </tr>
+                <tr>
+                    <td>Bon app'</td>
+                    <td>France</td>
+                </tr>
+                <tr>
+                    <td>Godos Cocina Típica</td>
+                    <td>Spain</td>
+                </tr>
+                <tr>
+                    <td>Tradição Hipermercados</td>
+                    <td>Brazil</td>
+                </tr>
+                <tr>
+                    <td>Wartian Herkku</td>
+                    <td>Finland</td>
+                </tr>
+                <tr>
+                    <td>Split Rail Beer & Ale</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>Furia Bacalhau e Frutos do Mar</td>
+                    <td>Portugal</td>
+                </tr>
+                <tr>
+                    <td>Gourmet Lanchonetes</td>
+                    <td>Brazil</td>
+                </tr>
+                <tr>
+                    <td>Great Lakes Food Market</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>HILARIÓN-Abastos</td>
+                    <td>Venezuela</td>
+                </tr>
+                <tr>
+                    <td>Island Trading</td>
+                    <td>UK</td>
+                </tr>
+                <tr>
+                    <td>Lehmanns Marktstand</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Let's Stop N Shop</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>LILA-Supermercado</td>
+                    <td>Venezuela</td>
+                </tr>
+                <tr>
+                    <td>LINO-Delicateses</td>
+                    <td>Argentina</td>
+                </tr>
+                <tr>
+                    <td>Lonesome Pine Restaurant</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>Old World Delicatessen</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>Ottilies Käseladen</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Pericles Comidas clásicas</td>
+                    <td>Mexico</td>
+                </tr>
+                <tr>
+                    <td>Piccolo und mehr</td>
+                    <td>Switzerland</td>
+                </tr>
+                <tr>
+                    <td>Princesa Isabel Vinhos</td>
+                    <td>Portugal</td>
+                </tr>
+                <tr>
+                    <td>Que Delícia</td>
+                    <td>Brazil</td>
+                </tr>
+                <tr>
+                    <td>Queen Cozinha</td>
+                    <td>Brazil</td>
+                </tr>
+                <tr>
+                    <td>Rancho grande</td>
+                    <td>Argentina</td>
+                </tr>
+                <tr>
+                    <td>Reggiani Caseifici</td>
+                    <td>Italy</td>
+                </tr>
+                <tr>
+                    <td>Ricardo Adocicados</td>
+                    <td>Brazil</td>
+                </tr>
+                <tr>
+                    <td>Richter Supermarkt</td>
+                    <td>Switzerland</td>
+                </tr>
+                <tr>
+                    <td>Romero y tomillo</td>
+                    <td>Spain</td>
+                </tr>
+                <tr>
+                    <td>Santé Gourmet</td>
+                    <td>Brazil</td>
+                </tr>
+                <tr>
+                    <td>Save-a-lot Markets</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>Seven Seas Imports</td>
+                    <td>UK</td>
+                </tr>
+                <tr>
+                    <td>Simons bistro</td>
+                    <td>Denmark</td>
+                </tr>
+                <tr>
+                    <td>Spécialités du monde</td>
+                    <td>France</td>
+                </tr>
+                <tr>
+                    <td>Split Rail Beer & Ale</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>Suprêmes délices</td>
+                    <td>Belgium</td>
+                </tr>
+                <tr>
+                    <td>The Big Cheese</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>The Cracker Box</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>Toms Spezialitäten</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Tradição Hipermercados</td>
+                    <td>Brazil</td>
+                </tr>
+                <tr>
+                    <td>Trail's Head Gourmet Provisioners</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>Vaffeljernet</td>
+                    <td>Norway</td>
+                </tr>
+                <tr>
+                    <td>Victuailles en stock</td>
+                    <td>France</td>
+                </tr>
+                <tr>
+                    <td>Vins et alcools Chevalier</td>
+                    <td>France</td>
+                </tr>
+                <tr>
+                    <td>Wartian Herkku</td>
+                    <td>Finland</td>
+                </tr>
+                <tr>
+                    <td>Wellington Importadora</td>
+                    <td>Brazil</td>
+                </tr>
+                <tr>
+                    <td>White Clover Markets</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>Wilman Kala</td>
+                    <td>Finland</td>
+                </tr>
+                <tr>
+                    <td>Wolski Zajazd</td>
+                    <td>Poland</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="footer">
+        <a href="https://facebook.com" target="_blank" title="Facebook" style="margin:0 10px;display:inline-block;">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" style="width:32px;height:32px;filter:grayscale(0%);">
+        </a>
+        <a href="https://linkedin.com" target="_blank" title="LinkedIn" style="margin:0 10px;display:inline-block;">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" style="width:32px;height:32px;filter:grayscale(0%);">
+        </a>
+        <a href="https://github.com" target="_blank" title="GitHub" style="margin:0 10px;display:inline-block;">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" style="width:32px;height:32px;filter:grayscale(0%);">
+        </a>
+    </div>
+    <script>
+        // وظيفة البحث للجدول (بحث بالاسم أو الدولة)
+        function filterTable() {
+            var input = document.getElementById("search");
+            var filter = input.value.toUpperCase();
+            var table = document.getElementById("customer-table");
+            var tr = table.getElementsByTagName("tr");
+            for (var i = 0; i < tr.length; i++) {
+                var tdName = tr[i].getElementsByTagName("td")[0];
+                var tdCountry = tr[i].getElementsByTagName("td")[1];
+                if (tdName && tdCountry) {
+                    var txtValueName = tdName.textContent || tdName.innerText;
+                    var txtValueCountry = tdCountry.textContent || tdCountry.innerText;
+                    if (
+                        txtValueName.toUpperCase().indexOf(filter) > -1 ||
+                        txtValueCountry.toUpperCase().indexOf(filter) > -1
+                    ) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        var dropdown = document.getElementById("dropdownMenu");
+        var content = dropdown.querySelector(".dropdown-content");
+
+        
+        dropdown.onmouseenter = function() {
+            content.classList.add("show");
+        };
+
+        
+        document.onclick = function(event) {
+            if (!dropdown.contains(event.target)) {
+                content.classList.remove("show");
+            }
+        };
+    </script>
+    <script>
+        // بيانات إضافية لكل عميل (يمكنك تعديلها أو زيادتها)
+        var customerDetails = {
+            'Moataz Ahmed': { country: 'Egypt', email: 'moataz@example.com', phone: '+20 100 000 0000' },
+            'Alfreds Futterkiste': { country: 'Germany', email: 'alfreds@futterkiste.de', phone: '+49 30 123456' },
+            'Berglunds snabbköp': { country: 'Sweden', email: 'info@berglunds.se', phone: '+46 8 123456' },
+            'Island Trading': { country: 'UK', email: 'contact@islandtrading.co.uk', phone: '+44 20 1234 5678' },
+            'Königlich Essen': { country: 'Germany', email: 'info@koniglichessen.de', phone: '+49 40 987654' },
+            'Laughing Bacchus Winecellars': { country: 'Canada', email: 'info@bacchuswine.ca', phone: '+1 604 123 4567' },
+            'Magazzini Alimentari Riuniti': { country: 'Italy', email: 'info@magazzini.it', phone: '+39 06 1234567' },
+            'North South': { country: 'UK', email: 'info@northsouth.co.uk', phone: '+44 161 123456' },
+            'Paris spécialités': { country: 'France', email: 'contact@parisspecialites.fr', phone: '+33 1 23456789' },
+            'Tokyo Traders': { country: 'Japan', email: 'info@tokyotraders.jp', phone: '+81 3 1234 5678' },
+            'Centro comercial Moctezuma': { country: 'Mexico', email: 'info@moctezuma.mx', phone: '+52 55 1234 5678' },
+            'Ernst Handel': { country: 'Austria', email: 'info@ernsthandel.at', phone: '+43 1 234567' },
+            'Folk och fä HB': { country: 'Sweden', email: 'info@folkfa.se', phone: '+46 31 123456' },
+            'Franchi S.p.A.': { country: 'Italy', email: 'info@franchi.it', phone: '+39 02 1234567' },
+            'Wellington Importadora': { country: 'Brazil', email: 'info@wellington.com.br', phone: '+55 11 1234 5678' },
+            'Blauer See Delikatessen': { country: 'Germany', email: 'info@blauers.de', phone: '+49 89 123456' },
+            'Save-a-lot Markets': { country: 'USA', email: 'info@savealot.com', phone: '+1 212 555 1234' },
+            'Simons bistro': { country: 'Denmark', email: 'info@simonsbistro.dk', phone: '+45 33 123456' },
+            'Piccolo und mehr': { country: 'Switzerland', email: 'info@piccolo.ch', phone: '+41 44 1234567' },
+            'Rattlesnake Canyon Grocery': { country: 'USA', email: 'info@rattlesnakecanyon.com', phone: '+1 303 555 1234' },
+            'Suprêmes délices': { country: 'Belgium', email: 'info@supremesdelices.be', phone: '+32 2 123 4567' },
+            'Vaffeljernet': { country: 'Norway', email: 'info@vaffeljernet.no', phone: '+47 22 123456' },
+            'White Clover Markets': { country: 'USA', email: 'info@whiteclover.com', phone: '+1 415 555 1234' },
+            'QUICK-Stop': { country: 'Germany', email: 'info@quickstop.de', phone: '+49 69 123456' },
+            'Hungry Owl All-Night Grocers': { country: 'UK', email: 'info@hungryowl.co.uk', phone: '+44 20 9876 5432' },
+            'La maison d\'Asie': { country: 'France', email: 'info@maisonasie.fr', phone: '+33 1 98765432' },
+            'Bon app\'': { country: 'France', email: 'info@bonapp.fr', phone: '+33 1 87654321' },
+            'Godos Cocina Típica': { country: 'Spain', email: 'info@godos.es', phone: '+34 91 1234567' },
+            'Tradição Hipermercados': { country: 'Brazil', email: 'info@tradicao.com.br', phone: '+55 21 1234 5678' },
+            'Wartian Herkku': { country: 'Finland', email: 'info@wartianherkku.fi', phone: '+358 9 1234567' },
+            'Split Rail Beer & Ale': { country: 'USA', email: 'info@splitrail.com', phone: '+1 312 555 1234' },
+            'Furia Bacalhau e Frutos do Mar': { country: 'Portugal', email: 'info@furiabacalhau.pt', phone: '+351 21 1234567' },
+            'Gourmet Lanchonetes': { country: 'Brazil', email: 'info@gourmetlanchonetes.com.br', phone: '+55 31 1234 5678' },
+            'Great Lakes Food Market': { country: 'USA', email: 'info@greatlakes.com', phone: '+1 616 555 1234' },
+            'HILARIÓN-Abastos': { country: 'Venezuela', email: 'info@hilarion.com.ve', phone: '+58 212 1234567' },
+            'Lehmanns Marktstand': { country: 'Germany', email: 'info@lehmanns.de', phone: '+49 30 987654' },
+            'Let\'s Stop N Shop': { country: 'USA', email: 'info@stopnshop.com', phone: '+1 718 555 1234' },
+            'LILA-Supermercado': { country: 'Venezuela', email: 'info@lila.com.ve', phone: '+58 212 7654321' },
+            'LINO-Delicateses': { country: 'Argentina', email: 'info@lino.com.ar', phone: '+54 11 1234 5678' },
+            'Lonesome Pine Restaurant': { country: 'USA', email: 'info@lonesomepine.com', phone: '+1 919 555 1234' },
+            'Old World Delicatessen': { country: 'USA', email: 'info@oldworlddeli.com', phone: '+1 503 555 1234' },
+            'Ottilies Käseladen': { country: 'Germany', email: 'info@ottilies.de', phone: '+49 89 765432' },
+            'Pericles Comidas clásicas': { country: 'Mexico', email: 'info@pericles.mx', phone: '+52 55 8765 4321' },
+            'Princesa Isabel Vinhos': { country: 'Portugal', email: 'info@princesaisabel.pt', phone: '+351 22 1234567' },
+            'Que Delícia': { country: 'Brazil', email: 'info@quedelicia.com.br', phone: '+55 41 1234 5678' },
+            'Queen Cozinha': { country: 'Brazil', email: 'info@queencozinha.com.br', phone: '+55 61 1234 5678' },
+            'Rancho grande': { country: 'Argentina', email: 'info@ranchogrande.com.ar', phone: '+54 11 8765 4321' },
+            'Reggiani Caseifici': { country: 'Italy', email: 'info@reggiani.it', phone: '+39 051 1234567' },
+            'Ricardo Adocicados': { country: 'Brazil', email: 'info@ricardo.com.br', phone: '+55 71 1234 5678' },
+            'Richter Supermarkt': { country: 'Switzerland', email: 'info@richter.ch', phone: '+41 31 1234567' },
+            'Romero y tomillo': { country: 'Spain', email: 'info@romeroytomillo.es', phone: '+34 93 1234567' },
+            'Santé Gourmet': { country: 'Brazil', email: 'info@santegourmet.com.br', phone: '+55 81 1234 5678' },
+            'Seven Seas Imports': { country: 'UK', email: 'info@sevenseas.co.uk', phone: '+44 151 123456' },
+            'Spécialités du monde': { country: 'France', email: 'info@specialitesdumonde.fr', phone: '+33 4 12345678' },
+            'The Big Cheese': { country: 'USA', email: 'info@thebigcheese.com', phone: '+1 212 555 5678' },
+            'The Cracker Box': { country: 'USA', email: 'info@crackerbox.com', phone: '+1 415 555 5678' },
+            'Toms Spezialitäten': { country: 'Germany', email: 'info@tomsspezial.de', phone: '+49 211 123456' },
+            'Trail\'s Head Gourmet Provisioners': { country: 'USA', email: 'info@trailshead.com', phone: '+1 307 555 1234' },
+            'Victuailles en stock': { country: 'France', email: 'info@victuailles.fr', phone: '+33 5 12345678' },
+            'Vins et alcools Chevalier': { country: 'France', email: 'info@chevalier.fr', phone: '+33 2 12345678' },
+            'Wilman Kala': { country: 'Finland', email: 'info@wilman.fi', phone: '+358 3 1234567' },
+            'Wolski Zajazd': { country: 'Poland', email: 'info@wolski.pl', phone: '+48 12 1234567' }
+        };
+
+        $(document).ready(function() {
+            // أضف كلاس للأسماء لجعلها قابلة للنقر
+            $('#customer-table tr').each(function() {
+                var $nameCell = $(this).find('td:first');
+                if ($nameCell.length) {
+                    $nameCell.addClass('customer-name');
+                    $nameCell.css('cursor', 'pointer');
+                }
+            });
+
+            // عند الضغط على الاسم
+            $('#customer-table').on('click', '.customer-name', function() {
+                // إزالة أي بوكس مفتوح آخر
+                $('.customer-details-box').remove();
+                var name = $(this).text().trim();
+                var details = customerDetails[name];
+                var boxHtml = '';
+                if (details) {
+                    boxHtml = `<div class='customer-details-box' style='background:#fffbe7;border:1.5px solid #f47521;padding:14px 18px;border-radius:12px;box-shadow:0 2px 12px #f4752140;position:absolute;z-index:10;min-width:220px;text-align:left;'>
+                        <strong>Name:</strong> ${name}<br>
+                        <strong>Country:</strong> ${details.country}<br>
+                        <strong>Email:</strong> ${details.email}<br>
+                        <strong>Phone:</strong> ${details.phone}
+                    </div>`;
+                } else {
+                    boxHtml = `<div class='customer-details-box' style='background:#fffbe7;border:1.5px solid #f47521;padding:14px 18px;border-radius:12px;box-shadow:0 2px 12px #f4752140;position:absolute;z-index:10;min-width:180px;text-align:left;'>
+                        <strong>Name:</strong> ${name}<br>
+                        <em>No more details available.</em>
+                    </div>`;
+                }
+                // حساب مكان البوكس
+                var offset = $(this).offset();
+                var box = $(boxHtml).css({
+                    top: offset.top + $(this).outerHeight() + 4,
+                    left: offset.left
+                });
+                $('body').append(box);
+            });
+
+            // إخفاء البوكس عند مغادرة الماوس له
+            $(document).on('mouseleave', '.customer-details-box', function() {
+                $(this).fadeOut(150, function() { $(this).remove(); });
+            });
+            // إظهار البوكس عند المرور عليه (حتى لا يختفي إذا كان الماوس عليه)
+            $(document).on('mouseenter', '.customer-details-box', function() {
+                $(this).stop(true, true).show();
+            });
+            // إخفاء البوكس إذا ابتعد الماوس عن الاسم والبوكس معًا
+            $(document).on('mousemove', function(e) {
+                var $box = $('.customer-details-box');
+                if ($box.length) {
+                    var box = $box[0].getBoundingClientRect();
+                    var overBox = e.clientX >= box.left && e.clientX <= box.right && e.clientY >= box.top && e.clientY <= box.bottom;
+                    var overName = $(e.target).hasClass('customer-name');
+                    if (!overBox && !overName) {
+                        $box.fadeOut(150, function() { $(this).remove(); });
+                    }
+                }
+            });
+        });
+        $(function() {
+        $('#add-customer-form').on('submit', function(e) {
+            e.preventDefault();
+            var name = $('#new-name').val().trim();
+            var country = $('#new-country').val().trim();
+            var email = $('#new-email').val().trim();
+            var phone = $('#new-phone').val().trim();
+            if (!name || !country) {
+                alert('Name and Country are required!');
+                return;
+            }
+            if (!email) email = null;
+            if (!phone) phone = null;
+            // أضف للجدول
+            var newRow = `<tr><td class="customer-name" style="cursor:pointer;">${name}</td><td>${country}</td></tr>`;
+            $('#customer-table').append(newRow);
+            // أضف للبيانات
+            customerDetails[name] = { country: country, email: email, phone: phone };
+            // امسح الحقول
+            $('#add-customer-form')[0].reset();
+        });
+    });
+    </script>
+    
+</body>
+</html>
